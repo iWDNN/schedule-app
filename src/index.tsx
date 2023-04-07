@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createGlobalStyle } from "styled-components";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "./app/store";
 const GlobalStyle = createGlobalStyle`
 html,
 body,

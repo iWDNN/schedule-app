@@ -1,12 +1,19 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import uuid from "react-uuid";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { addTodo } from "../features/toDoSlice";
+import { TODO_LIST } from "../ls-type";
 
-interface IForm {
+export interface IToDoForm {
   priority: number;
-  todo: string;
-  textArea: string;
+  title: string;
+  content: string;
   category: string;
+  dateOption: string;
+  date: string;
+  cmp: boolean;
 }
 
 const Header = styled.header`
@@ -36,6 +43,16 @@ const DateBox = styled.div`
     font-weight: 700;
     font-size: 0.9em;
   }
+  input {
+    display: block;
+  }
+  div {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    button {
+      margin: 1px;
+    }
+  }
 `;
 const InputBox = styled.div`
   display: flex;
@@ -49,13 +66,21 @@ const InputBox = styled.div`
 `;
 
 export default function ToDoInput() {
-  const { handleSubmit, register } = useForm<IForm>({
-    defaultValues: {
-      // priority: 1,
-    },
-  });
-  const onSubmit = (data: any) => {
-    console.log(data);
+  // store
+  const dispatch = useAppDispatch();
+
+  const categories = useAppSelector((state) => state.categories);
+
+  // component
+  const { handleSubmit, register } = useForm<IToDoForm>({});
+  const onSubmit = (data: IToDoForm) => {
+    data.cmp = false;
+    const result = data;
+
+    const toDoListLS = JSON.parse(localStorage.getItem(TODO_LIST) as any);
+    localStorage.setItem(TODO_LIST, JSON.stringify([...toDoListLS, result]));
+
+    dispatch(addTodo(result));
   };
 
   return (
@@ -63,13 +88,22 @@ export default function ToDoInput() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <DateBox>
           <h1>D-Day</h1>
-          <input type="date" />
+          <input {...register("date")} type="date" />
         </DateBox>
+        <select {...register("dateOption")} size={2}>
+          <optgroup label="날짜">
+            <option value="due">까지</option>
+            <option value="Dday">당일</option>
+          </optgroup>
+        </select>
         <select {...register("category")} size={3}>
           <optgroup label="카테고리">
-            <option value={1}>매우 중요</option>
-            <option value={2}>중요</option>
-            <option value={3}>보통</option>
+            {categories &&
+              categories.map((category) => (
+                <option key={uuid()} value={category}>
+                  {category}
+                </option>
+              ))}
           </optgroup>
         </select>
         <select {...register("priority")} size={3}>
@@ -81,10 +115,10 @@ export default function ToDoInput() {
         </select>
 
         <InputBox>
-          <input placeholder="제목" {...register("todo")}></input>
+          <input placeholder="제목" {...register("title")}></input>
           <textarea
             placeholder="내용"
-            {...register("textArea")}
+            {...register("content")}
             rows={5}
             cols={20}
           ></textarea>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import CategoryInput from "./components/CategoryInput";
 import PopUp from "./components/PopUp";
 import ToDoInput from "./components/ToDoInput";
 import ToDoList from "./components/ToDoList";
@@ -25,12 +26,18 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
-  font-size: 58px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1em 0;
-  /* animation: ${blink} 1.5s 1s infinite linear alternate; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(50%, 50%);
+  width: 100vw;
+  height: 100vh;
+  div {
+    font-size: 58px;
+    margin: 1em 0;
+    /* animation: ${blink} 1.5s 1s infinite linear alternate; */
+  }
 `;
 
 const Box = styled.div`
@@ -47,9 +54,11 @@ function App() {
     <>
       <Container>
         <Logo>
-          <i className="fa-solid fa-terminal"></i>
+          <div>
+            <i className="fa-solid fa-terminal"></i>
+          </div>
         </Logo>
-
+        {/* <CategoryInput />
         <ToDoInput />
         <Box>
           <h1>~Ing</h1>
@@ -58,7 +67,7 @@ function App() {
         <Box>
           <h1>Cmp</h1>
           <ToDoList />
-        </Box>
+        </Box> */}
       </Container>
       {/* <PopUp /> */}
     </>

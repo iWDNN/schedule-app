@@ -1,5 +1,10 @@
 import React from "react";
+import uuid from "react-uuid";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { resetToDo } from "../features/toDoSlice";
+import { TODO_LIST } from "../ls-type";
+import { dDay } from "../utils";
 
 const List = styled.ul`
   display: flex;
@@ -31,39 +36,40 @@ const InItem = styled.li`
   font-size: 0.8em;
 `;
 export default function ToDoList() {
+  const dispatch = useAppDispatch();
+
+  const toDoList = useAppSelector((state) => state.toDoList);
+  const categories = useAppSelector((state) => state.categories);
+
+  const onClickReset = () => {
+    localStorage.setItem(TODO_LIST, JSON.stringify([]));
+    dispatch(resetToDo());
+  };
   return (
     <>
+      <button onClick={onClickReset}>리셋</button>
       <List>
-        <Item>
-          <h1>취업</h1>
-          <InList>
-            <InItem>
-              <span>D-5</span>
-              <span>이력서 수정</span>
-              <span>~2023/04/08</span>
-            </InItem>
-            <InItem>
-              <span>D-5</span>
-              <span>이력서 수정</span>
-              <span>~2023/04/08</span>
-            </InItem>
-          </InList>
-        </Item>
-        <Item>
-          <h1>게임</h1>
-          <InList>
-            <InItem>
-              <span>D-5</span>
-              <span>이력서 수정</span>
-              <span>~2023/04/08</span>
-            </InItem>
-            <InItem>
-              <span>D-5</span>
-              <span>이력서 수정</span>
-              <span>~2023/04/08</span>
-            </InItem>
-          </InList>
-        </Item>
+        {categories.map((category) => (
+          <Item key={uuid()}>
+            <h1>{category}</h1>
+            <InList>
+              {toDoList.map(
+                (todo) =>
+                  todo.category === category && (
+                    <InItem key={uuid()}>
+                      <span>D-{dDay(todo.date)}</span>
+                      <span>{todo.title}</span>
+                      <span>
+                        {todo.dateOption === "due"
+                          ? "~" + todo.date
+                          : todo.date}
+                      </span>
+                    </InItem>
+                  )
+              )}
+            </InList>
+          </Item>
+        ))}
       </List>
     </>
   );

@@ -1,18 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IToDoForm } from "../components/ToDoInput";
+import { TODO_LIST } from "../ls-type";
 
-interface ToDoState {
-  priority: number;
-  todo: string;
-  textArea: string;
-  category: string;
-  date: string;
-  cmp: boolean;
+if (!localStorage.getItem(TODO_LIST)) {
+  localStorage.setItem(TODO_LIST, JSON.stringify([]));
 }
+const initialState: IToDoForm[] = JSON.parse(
+  localStorage.getItem(TODO_LIST) as any
+);
 
-const initialState: ToDoState[] = [];
-
-export const ToDoSlice = createSlice({
-  name: "todo",
+export const toDoSlice = createSlice({
+  name: "toDoSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    addTodo: (state, action) => {
+      state.push(action.payload);
+    },
+    resetToDo: () => [],
+  },
 });
+
+export const { addTodo, resetToDo } = toDoSlice.actions;
+
+export default toDoSlice.reducer;
