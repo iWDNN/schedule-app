@@ -44,6 +44,9 @@ const List = styled.ul`
   li:nth-child(2) {
     scale: 1.2;
   }
+  li:nth-child(3) {
+    scale: 1.15;
+  }
 `;
 const Item = styled.li`
   min-width: 560px;

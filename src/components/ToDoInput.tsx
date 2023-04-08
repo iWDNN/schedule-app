@@ -16,6 +16,7 @@ export interface IToDoForm {
   title: string;
   content: string;
   cmp: boolean;
+  end: boolean;
 }
 
 const Header = styled.header`
@@ -77,6 +78,7 @@ export default function ToDoInput() {
   const { handleSubmit, register, setValue } = useForm<IToDoForm>({});
   const onSubmit = (data: IToDoForm) => {
     data.id = uuid();
+    data.end = false;
     data.cmp = false;
     const result = data;
 

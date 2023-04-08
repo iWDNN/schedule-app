@@ -16,6 +16,7 @@ export const toDoSlice = createSlice({
     addTodo: (state, action) => {
       state.push(action.payload);
     },
+    endToDo: (state, action) => {},
     resetToDo: () => [],
   },
 });

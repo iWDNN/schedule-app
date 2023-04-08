@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -38,13 +38,20 @@ const InItem = styled.li`
 export default function ToDoList() {
   const dispatch = useAppDispatch();
 
-  const toDoList = useAppSelector((state) => state.toDoList);
+  const toDoList = useAppSelector((state) => state.toDoList).filter(
+    (todo) => todo.end === false
+  );
   const categories = useAppSelector((state) => state.categories);
 
   const onClickReset = () => {
     localStorage.setItem(TODO_LIST, JSON.stringify([]));
     dispatch(resetToDo());
   };
+  useEffect(() => {
+    // const interval = setInterval(() => {}, 3000);
+    // return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <button onClick={onClickReset}>투두리스트 리셋</button>
