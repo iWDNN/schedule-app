@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { resetToDo } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
-import { dDay } from "../utils";
+import { dDay, dTime } from "../utils";
 
 const List = styled.ul`
   display: flex;
@@ -47,7 +47,7 @@ export default function ToDoList() {
   };
   return (
     <>
-      <button onClick={onClickReset}>리셋</button>
+      <button onClick={onClickReset}>투두리스트 리셋</button>
       <List>
         {categories.map((category) => (
           <Item key={uuid()}>
@@ -58,6 +58,7 @@ export default function ToDoList() {
                   todo.category === category && (
                     <InItem key={uuid()}>
                       <span>D-{dDay(todo.date)}</span>
+                      <span>Dtime-{dTime(`${todo.date} ${todo.time}`)}</span>
                       <span>{todo.title}</span>
                       <span>
                         {todo.dateOption === "due"

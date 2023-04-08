@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
-import { addCategory } from "../features/categorySlice";
+import { addCategory, resetCategory } from "../features/categorySlice";
 import { CATEGORIES } from "../ls-type";
 
 interface ICategoryForm {
@@ -34,9 +34,14 @@ export default function CategoryInput() {
 
     setValue("categoryName", "");
   };
+  const onClickReset = () => {
+    localStorage.setItem(CATEGORIES, JSON.stringify([]));
+    dispatch(resetCategory());
+  };
 
   return (
     <>
+      <button onClick={onClickReset}>카테고리리셋</button>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input {...register("categoryName")} placeholder="카테고리 이름" />
         <button>추가</button>

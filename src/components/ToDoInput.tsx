@@ -7,12 +7,14 @@ import { addTodo } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
 
 export interface IToDoForm {
+  id: string;
+  date: string;
+  time: string;
+  dateOption: string;
+  category: string;
   priority: number;
   title: string;
   content: string;
-  category: string;
-  dateOption: string;
-  date: string;
   cmp: boolean;
 }
 
@@ -72,8 +74,9 @@ export default function ToDoInput() {
   const categories = useAppSelector((state) => state.categories);
 
   // component
-  const { handleSubmit, register } = useForm<IToDoForm>({});
+  const { handleSubmit, register, setValue } = useForm<IToDoForm>({});
   const onSubmit = (data: IToDoForm) => {
+    data.id = uuid();
     data.cmp = false;
     const result = data;
 
@@ -81,6 +84,9 @@ export default function ToDoInput() {
     localStorage.setItem(TODO_LIST, JSON.stringify([...toDoListLS, result]));
 
     dispatch(addTodo(result));
+
+    setValue("title", "");
+    setValue("content", "");
   };
 
   return (
@@ -89,6 +95,7 @@ export default function ToDoInput() {
         <DateBox>
           <h1>D-Day</h1>
           <input {...register("date")} type="date" />
+          <input {...register("time")} type="time" />
         </DateBox>
         <select {...register("dateOption")} size={2}>
           <optgroup label="날짜">
