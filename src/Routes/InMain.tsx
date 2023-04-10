@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../hooks";
 import CategoryInput from "../components/CategoryInput";
 import ToDoInput from "../components/ToDoInput";
 import ToDoList from "../components/ToDoList";

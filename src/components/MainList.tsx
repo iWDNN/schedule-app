@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import styled, { keyframes } from "styled-components";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../hooks";
 import { dDay, dTime } from "../utils";
 
 interface ITime {

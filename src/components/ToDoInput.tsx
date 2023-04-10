@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import uuid from "react-uuid";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { addToDo } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
 import { plusZero } from "../utils";
