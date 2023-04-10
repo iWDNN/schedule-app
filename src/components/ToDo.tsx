@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
 import { setPopUp } from "../features/popUpSlice";

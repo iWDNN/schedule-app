@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../app/hooks";
 import CategoryInput from "../components/CategoryInput";
-import ToDoInput, { IToDoForm } from "../components/ToDoInput";
+import ToDoInput from "../components/ToDoInput";
 import ToDoList from "../components/ToDoList";
 
 const Box = styled.div`
