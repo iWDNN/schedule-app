@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../app/hooks";
 import { addCategory, resetCategory } from "../features/categorySlice";
 import { CATEGORIES } from "../ls-type";
 

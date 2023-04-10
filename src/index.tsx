@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { createGlobalStyle } from "styled-components";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "./app/store";
 import { RouterProvider } from "react-router-dom";
 import router from "./Router";
 
