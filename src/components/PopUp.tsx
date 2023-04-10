@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setPopUp } from "../features/popUpSlice";
+import { dDay } from "../utils";
 
 const PopUpBg = styled.div`
   position: fixed;
@@ -51,20 +54,33 @@ const Content = styled.div`
 `;
 
 export default function PopUp() {
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.popUpToggle);
+  const onClickBg = () => {
+    console.log("bg");
+    dispatch(
+      setPopUp({
+        toggle: false,
+        data: null,
+      })
+    );
+  };
+  const onClickPopUp = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    console.log("popup");
+  };
   return (
-    <PopUpBg>
-      <PopUpCt>
+    <PopUpBg onClick={onClickBg}>
+      <PopUpCt onClick={onClickPopUp}>
         <Content>
           <h1>
-            <span>D-7</span>
-            <span>이력서 수정</span>
+            <span>{dDay(data?.date)}</span>
+            <span>{data?.title}</span>
           </h1>
           <div>
-            <span>~2023-04-08</span>
+            <span>~{data?.date}</span>
           </div>
-          <p>
-            - 포트폴리오 사진 기입 <br />- 자기소개서 내용 추가(리엑트관한)
-          </p>
+          <p>{data?.content}</p>
         </Content>
         <button>완료</button>
       </PopUpCt>

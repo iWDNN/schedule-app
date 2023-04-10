@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useAppDispatch } from "../app/hooks";
@@ -38,7 +38,6 @@ export default function CategoryInput() {
     localStorage.setItem(CATEGORIES, JSON.stringify([]));
     dispatch(resetCategory());
   };
-
   return (
     <>
       <button onClick={onClickReset}>카테고리리셋</button>

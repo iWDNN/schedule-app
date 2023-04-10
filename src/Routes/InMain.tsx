@@ -16,6 +16,8 @@ const Box = styled.div`
 const List = styled.ul``;
 const Item = styled.li``;
 export default function InMain() {
+  const toDos = useAppSelector((state) => state.toDoList);
+
   useEffect(() => {
     console.log("InMain.tsx useEffect");
   }, []);
@@ -25,16 +27,18 @@ export default function InMain() {
       <ToDoInput />
       <Box>
         <h1>~Ing</h1>
-        <ToDoList />
+        <ToDoList st="ing" />
       </Box>
       <Box>
         <h1>End</h1>
         <List>
           <Item>
             <h1>Cmp</h1>
+            <ToDoList st="cmp" />
           </Item>
           <Item>
             <h1>Failed</h1>
+            <ToDoList st="fail" />
           </Item>
         </List>
       </Box>

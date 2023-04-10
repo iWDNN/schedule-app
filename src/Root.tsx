@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useAppSelector } from "./app/hooks";
 import Logo from "./components/Logo";
 import MainList from "./components/MainList";
 import PopUp from "./components/PopUp";
@@ -16,7 +17,7 @@ const Container = styled.div`
 
 function Root() {
   const { pathname } = useLocation();
-
+  const { toggle } = useAppSelector((state) => state.popUpToggle);
   useEffect(() => {
     console.log("Root.tsx useEffect");
   }, []);
@@ -27,7 +28,7 @@ function Root() {
         {pathname === "/" && <MainList />}
         <Outlet />
       </Container>
-      {/* <PopUp /> */}
+      {toggle && <PopUp />}
     </>
   );
 }

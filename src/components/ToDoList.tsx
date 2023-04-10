@@ -2,9 +2,15 @@ import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { resetToDo } from "../features/toDoSlice";
+import { resetToDo, setToDos } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
 import { dDay } from "../utils";
+import ToDo from "./ToDo";
+import { IToDoForm } from "./ToDoInput";
+
+interface IToDoListProps {
+  st: string;
+}
 
 const List = styled.ul`
   display: flex;
@@ -29,21 +35,17 @@ const InList = styled.ul`
   width: 300px;
   height: 350px;
 `;
-const InItem = styled.li`
-  display: grid;
-  grid-template-columns: 20% 50% 30%;
-  margin: 0.5em 0;
-  font-size: 0.8em;
-  span {
-    display: block;
-    place-self: center;
-  }
-`;
-export default function ToDoList() {
+
+export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
-  const toDos = useAppSelector((state) => state.toDoList).filter(
-    (todo) => todo.end === false
+  const allToDos = useAppSelector((state) => state.toDoList);
+  const noEndtoDos = useAppSelector((state) => state.toDoList).filter((todo) =>
+    st === "ing"
+      ? !todo.end
+      : st === "cmp"
+      ? todo.end && todo.cmp
+      : todo.end && !todo.cmp
   );
   const categories = useAppSelector((state) => state.categories);
 
@@ -51,8 +53,24 @@ export default function ToDoList() {
     localStorage.setItem(TODO_LIST, JSON.stringify([]));
     dispatch(resetToDo());
   };
+  const updateToDo = () => {
+    const result: IToDoForm[] = [];
+    allToDos.forEach((toDo) => {
+      const temp = Object.assign({}, toDo);
+      if (
+        new Date(`${toDo.date} ${toDo.time}`).getTime() -
+          new Date().getTime() <=
+        0
+      ) {
+        temp.end = true;
+        result.push(temp);
+      } else result.push(temp);
+    });
+    localStorage.setItem(TODO_LIST, JSON.stringify(result));
+    dispatch(setToDos(result));
+  };
   useEffect(() => {
-    console.log("ToDoList.tsx useEffect");
+    updateToDo();
   }, []);
 
   return (
@@ -63,18 +81,10 @@ export default function ToDoList() {
           <Item key={uuid()}>
             <h1>{category}</h1>
             <InList>
-              {toDos.map(
+              {noEndtoDos.map(
                 (todo) =>
                   todo.category === category && (
-                    <InItem key={uuid()}>
-                      <span>D-{dDay(todo.date)}</span>
-                      <span>{todo.title}</span>
-                      <span>
-                        {todo.dateOption === "due"
-                          ? "~" + todo.date
-                          : todo.date}
-                      </span>
-                    </InItem>
+                    <ToDo key={uuid()} toDoData={todo} />
                   )
               )}
             </InList>

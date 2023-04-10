@@ -2,9 +2,13 @@ export const plusZero = (number: string) => {
   return number.padStart(2, "0");
 };
 
-export const dDay = (date: string) => {
-  const time = new Date(date).getTime() - new Date().getTime();
-  return Math.ceil(time / (24 * 60 * 60 * 1000));
+export const dDay = (date: string | undefined) => {
+  if (typeof date === "undefined") {
+    return null;
+  } else {
+    const time = new Date(date).getTime() - new Date().getTime();
+    return Math.ceil(time / (24 * 60 * 60 * 1000));
+  }
 };
 
 export const dTime = (dateTime: string) => {
