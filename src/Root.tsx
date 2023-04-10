@@ -17,7 +17,7 @@ const Container = styled.div`
 
 function Root() {
   const { pathname } = useLocation();
-  const { toggle } = useAppSelector((state) => state.popUpToggle);
+  const { toggle } = useAppSelector((state) => state.storePopUp);
   useEffect(() => {
     console.log("Root.tsx useEffect");
   }, []);
