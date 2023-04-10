@@ -73,7 +73,7 @@ export default function ToDoInput() {
   // store
   const dispatch = useAppDispatch();
 
-  const categories = useAppSelector((state) => state.categories);
+  const categories = useAppSelector((state) => state.storeCategories);
   // component
   const now = new Date();
   const { handleSubmit, register, setValue } = useForm<IToDoForm>({

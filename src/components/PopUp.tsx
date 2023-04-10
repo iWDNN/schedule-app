@@ -55,7 +55,7 @@ const Content = styled.div`
 
 export default function PopUp() {
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.popUpToggle);
+  const { data } = useAppSelector((state) => state.storePopUp);
   const onClickBg = () => {
     console.log("bg");
     dispatch(

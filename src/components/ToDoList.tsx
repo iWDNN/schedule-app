@@ -38,15 +38,16 @@ const InList = styled.ul`
 export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
-  const allToDos = useAppSelector((state) => state.toDos);
-  const noEndtoDos = useAppSelector((state) => state.toDos).filter((todo) =>
-    st === "ing"
-      ? !todo.end
-      : st === "cmp"
-      ? todo.end && todo.cmp
-      : todo.end && !todo.cmp
+  const allToDos = useAppSelector((state) => state.storeToDos);
+  const noEndtoDos = useAppSelector((state) => state.storeToDos).filter(
+    (todo) =>
+      st === "ing"
+        ? !todo.end
+        : st === "cmp"
+        ? todo.end && todo.cmp
+        : todo.end && !todo.cmp
   );
-  const categories = useAppSelector((state) => state.categories);
+  const categories = useAppSelector((state) => state.storeCategories);
 
   const onClickReset = () => {
     localStorage.setItem(TODO_LIST, JSON.stringify([]));

@@ -99,8 +99,8 @@ function Time({ deadline }: ITime) {
 }
 
 export default function MainList() {
-  const sortToDos = useAppSelector((state) => state.toDos)
-    .filter((todos) => !todos.end)
+  const sortToDos = useAppSelector((state) => state.storeToDos)
+    .filter((toDo) => !toDo.end)
     .sort(
       (a, b) =>
         new Date(`${a.date} ${a.time}`).getTime() -
