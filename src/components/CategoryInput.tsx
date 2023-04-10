@@ -9,14 +9,30 @@ interface ICategoryForm {
   categoryName: string;
 }
 
+const CategoryCt = styled.div`
+  display: flex;
+  button {
+    border: none;
+    padding: 0.7em 1em;
+    border-radius: 7px;
+  }
+  button:first-child {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  button:last-child {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+`;
+
 const Form = styled.form`
   * {
     border: none;
   }
   input {
+    padding: 0.64em 1em;
     outline: 1px solid #eee;
-  }
-  button {
   }
 `;
 
@@ -39,12 +55,12 @@ export default function CategoryInput() {
     dispatch(resetCategory());
   };
   return (
-    <>
-      <button onClick={onClickReset}>카테고리리셋</button>
+    <CategoryCt>
+      <button onClick={onClickReset}>카테고리 리셋</button>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input {...register("categoryName")} placeholder="카테고리 이름" />
         <button>추가</button>
       </Form>
-    </>
+    </CategoryCt>
   );
 }

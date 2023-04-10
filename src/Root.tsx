@@ -14,6 +14,14 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+const Programmer = styled.span`
+  position: fixed;
+  bottom: 0;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.65);
+`;
 
 function Root() {
   const { pathname } = useLocation();
@@ -27,6 +35,9 @@ function Root() {
         <Logo />
         {pathname === "/" && <MainList />}
         <Outlet />
+        <Programmer>
+          | Github - iWDNN | Gmail - chansi2064@gmail.com |
+        </Programmer>
       </Container>
       {toggle && <PopUp />}
     </>

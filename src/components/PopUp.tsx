@@ -74,7 +74,7 @@ export default function PopUp() {
       <PopUpCt onClick={onClickPopUp}>
         <Content>
           <h1>
-            <span>{dDay(data?.date)}</span>
+            <span>D-{dDay(data?.date)}</span>
             <span>{data?.title}</span>
           </h1>
           <div>

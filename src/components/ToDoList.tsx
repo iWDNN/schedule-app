@@ -20,10 +20,9 @@ const Item = styled.li`
   border: 1px solid #eee;
   padding: 0 1em;
   margin: 0 10px;
-  h1 {
-    font-size: 1.1em;
+  h3 {
     margin: 1em 0;
-    /* text-align: center; */
+    text-align: center;
   }
   * {
     border: none;
@@ -78,7 +77,7 @@ export default function ToDoList({ st }: IToDoListProps) {
       <List>
         {categories.map((category) => (
           <Item key={uuid()}>
-            <h1>{category}</h1>
+            <h3>{category}</h3>
             <InList>
               {filteredToDos.map(
                 (todo) =>
