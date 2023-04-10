@@ -17,10 +17,9 @@ export const toDoSlice = createSlice({
       state.push(action.payload);
     },
     setToDos: (state, action) => action.payload,
-    resetToDo: () => [],
   },
 });
 
-export const { addToDo, resetToDo, setToDos } = toDoSlice.actions;
+export const { addToDo, setToDos } = toDoSlice.actions;
 
 export default toDoSlice.reducer;

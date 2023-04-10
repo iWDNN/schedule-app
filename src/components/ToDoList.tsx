@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { resetToDo, setToDos } from "../features/toDoSlice";
+import { setToDos } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
 import ToDo from "./ToDo";
 import { IToDoForm } from "./ToDoInput";
@@ -39,19 +39,18 @@ export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
   const allToDos = useAppSelector((state) => state.storeToDos);
-  const noEndtoDos = useAppSelector((state) => state.storeToDos).filter(
-    (todo) =>
-      st === "ing"
-        ? !todo.end
-        : st === "cmp"
-        ? todo.end && todo.cmp
-        : todo.end && !todo.cmp
+  const filteredToDos = allToDos.filter((todo) =>
+    st === "ing"
+      ? !todo.end
+      : st === "cmp"
+      ? todo.end && todo.cmp
+      : todo.end && !todo.cmp
   );
   const categories = useAppSelector((state) => state.storeCategories);
 
   const onClickReset = () => {
     localStorage.setItem(TODO_LIST, JSON.stringify([]));
-    dispatch(resetToDo());
+    dispatch(setToDos([]));
   };
   const updateToDo = () => {
     const result: IToDoForm[] = [];
@@ -81,7 +80,7 @@ export default function ToDoList({ st }: IToDoListProps) {
           <Item key={uuid()}>
             <h1>{category}</h1>
             <InList>
-              {noEndtoDos.map(
+              {filteredToDos.map(
                 (todo) =>
                   todo.category === category && (
                     <ToDo key={uuid()} toDoData={todo} />
