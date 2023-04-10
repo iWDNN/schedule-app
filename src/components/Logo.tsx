@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 const blink = keyframes`
@@ -32,10 +32,12 @@ const Icon = styled.div`
   }
 `;
 export default function Logo() {
+  const { pathname } = useLocation();
+
   return (
     <>
       <Container>
-        <Link to="main">
+        <Link to={pathname === "/" ? "main" : "/"}>
           <Icon>
             <i className="fa-solid fa-terminal"></i>
           </Icon>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "./components/Logo";
@@ -16,6 +16,10 @@ const Container = styled.div`
 
 function Root() {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    console.log("Root.tsx useEffect");
+  }, []);
   return (
     <>
       <Container>

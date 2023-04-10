@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { resetToDo } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
-import { dDay, dTime } from "../utils";
+import { dDay } from "../utils";
 
 const List = styled.ul`
   display: flex;
@@ -13,10 +13,11 @@ const List = styled.ul`
 `;
 const Item = styled.li`
   border: 1px solid #eee;
-  padding: 1em;
+  padding: 0 1em;
   margin: 0 10px;
   h1 {
-    font-size: 0.9em;
+    font-size: 1.1em;
+    margin: 1em 0;
     /* text-align: center; */
   }
   * {
@@ -25,20 +26,23 @@ const Item = styled.li`
   }
 `;
 const InList = styled.ul`
-  width: 200px;
-  height: 250px;
+  width: 300px;
+  height: 350px;
 `;
 const InItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 20% 50% 30%;
   margin: 0.5em 0;
   font-size: 0.8em;
+  span {
+    display: block;
+    place-self: center;
+  }
 `;
 export default function ToDoList() {
   const dispatch = useAppDispatch();
 
-  const toDoList = useAppSelector((state) => state.toDoList).filter(
+  const toDos = useAppSelector((state) => state.toDoList).filter(
     (todo) => todo.end === false
   );
   const categories = useAppSelector((state) => state.categories);
@@ -48,8 +52,7 @@ export default function ToDoList() {
     dispatch(resetToDo());
   };
   useEffect(() => {
-    // const interval = setInterval(() => {}, 3000);
-    // return () => clearInterval(interval);
+    console.log("ToDoList.tsx useEffect");
   }, []);
 
   return (
@@ -60,12 +63,11 @@ export default function ToDoList() {
           <Item key={uuid()}>
             <h1>{category}</h1>
             <InList>
-              {toDoList.map(
+              {toDos.map(
                 (todo) =>
                   todo.category === category && (
                     <InItem key={uuid()}>
                       <span>D-{dDay(todo.date)}</span>
-                      <span>Dtime-{dTime(`${todo.date} ${todo.time}`)}</span>
                       <span>{todo.title}</span>
                       <span>
                         {todo.dateOption === "due"

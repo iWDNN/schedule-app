@@ -27,6 +27,17 @@ const sizeUpDown = keyframes`
     scale:1.4;
   }
 `;
+const colorChange = keyframes`
+  0%{
+    color:#000;
+  }
+  50%{
+    color:red;
+  }
+  100%{
+    color:#000;
+  }
+`;
 
 const MainCt = styled.div`
   h1 {
@@ -77,6 +88,9 @@ const Item = styled.li`
     font-size: 0.85em;
   }
 `;
+const TimeDisplay = styled.span<{ isActive: boolean }>`
+  color: ${(props) => (props.isActive ? "red" : "#000")};
+`;
 
 function Time({ deadline }: ITime) {
   const [value, setValue] = useState("");
@@ -86,15 +100,21 @@ function Time({ deadline }: ITime) {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-  return <span>{value}</span>;
+  return (
+    <TimeDisplay isActive={Number(dTime(deadline).slice(0, 2)) <= 24}>
+      {value}
+    </TimeDisplay>
+  );
 }
 
 export default function MainList() {
-  const todos = [...useAppSelector((state) => state.toDoList)].sort(
-    (a, b) =>
-      new Date(`${a.date} ${a.time}`).getTime() -
-      new Date(`${b.date} ${b.time}`).getTime()
-  );
+  const todos = useAppSelector((state) => state.toDoList)
+    .filter((todos) => !todos.end)
+    .sort(
+      (a, b) =>
+        new Date(`${a.date} ${a.time}`).getTime() -
+        new Date(`${b.date} ${b.time}`).getTime()
+    );
   return (
     <MainCt>
       <h1>Deadline ToDos</h1>
@@ -111,7 +131,8 @@ export default function MainList() {
 
               <span>{hotToDo.title}</span>
               <span>
-                {hotToDo.date} {hotToDo.time}
+                {hotToDo.dateOption === "due" && "~ "}
+                {hotToDo.date} {hotToDo.time.slice(0, 5)}
               </span>
             </Item>
           ))}

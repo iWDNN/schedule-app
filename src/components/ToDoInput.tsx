@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { addTodo } from "../features/toDoSlice";
+import { addToDo } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
+import { plusZero } from "../utils";
 
 export interface IToDoForm {
   id: string;
@@ -73,19 +74,31 @@ export default function ToDoInput() {
   const dispatch = useAppDispatch();
 
   const categories = useAppSelector((state) => state.categories);
-
   // component
-  const { handleSubmit, register, setValue } = useForm<IToDoForm>({});
+  const now = new Date();
+  const { handleSubmit, register, setValue } = useForm<IToDoForm>({
+    defaultValues: {
+      date: `${now.getFullYear()}-${plusZero(
+        String(now.getMonth() + 1)
+      )}-${plusZero(String(now.getDate()))}`,
+      dateOption: "due",
+      priority: 1,
+    },
+  });
   const onSubmit = (data: IToDoForm) => {
     data.id = uuid();
+    data.time = data.time
+      ? data.time + ":" + new Date().getSeconds()
+      : "23:59:59";
     data.end = false;
     data.cmp = false;
     const result = data;
+    console.log(result);
 
     const toDoListLS = JSON.parse(localStorage.getItem(TODO_LIST) as any);
     localStorage.setItem(TODO_LIST, JSON.stringify([...toDoListLS, result]));
 
-    dispatch(addTodo(result));
+    dispatch(addToDo(result));
 
     setValue("title", "");
     setValue("content", "");

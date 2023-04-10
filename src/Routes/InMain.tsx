@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAppSelector } from "../app/hooks";
 import CategoryInput from "../components/CategoryInput";
-import ToDoInput from "../components/ToDoInput";
+import ToDoInput, { IToDoForm } from "../components/ToDoInput";
 import ToDoList from "../components/ToDoList";
 
 const Box = styled.div`
@@ -12,7 +13,12 @@ const Box = styled.div`
     text-transform: uppercase;
   }
 `;
+const List = styled.ul``;
+const Item = styled.li``;
 export default function InMain() {
+  useEffect(() => {
+    console.log("InMain.tsx useEffect");
+  }, []);
   return (
     <>
       <CategoryInput />
@@ -22,8 +28,15 @@ export default function InMain() {
         <ToDoList />
       </Box>
       <Box>
-        <h1>Cmp</h1>
-        <ToDoList />
+        <h1>End</h1>
+        <List>
+          <Item>
+            <h1>Cmp</h1>
+          </Item>
+          <Item>
+            <h1>Failed</h1>
+          </Item>
+        </List>
       </Box>
     </>
   );
