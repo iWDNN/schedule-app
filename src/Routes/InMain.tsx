@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useAppSelector } from "../hooks";
 import CategoryInput from "../components/CategoryInput";
 import ToDoInput from "../components/ToDoInput";
 import ToDoList from "../components/ToDoList";
@@ -16,8 +15,6 @@ const Box = styled.div`
 const List = styled.ul``;
 const Item = styled.li``;
 export default function InMain() {
-  const toDos = useAppSelector((state) => state.toDoList);
-
   useEffect(() => {
     console.log("InMain.tsx useEffect");
   }, []);

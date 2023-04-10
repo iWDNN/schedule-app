@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { useAppSelector } from "./hooks";
+import { useAppSelector } from "./app/hooks";
 import Logo from "./components/Logo";
 import MainList from "./components/MainList";
 import PopUp from "./components/PopUp";

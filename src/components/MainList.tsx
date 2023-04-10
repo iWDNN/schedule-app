@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import styled, { keyframes } from "styled-components";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../app/hooks";
 import { dDay, dTime } from "../utils";
 
 interface ITime {
@@ -25,17 +25,6 @@ const sizeUpDown = keyframes`
   100%{
     border: 1px solid #eee;
     scale:1.4;
-  }
-`;
-const colorChange = keyframes`
-  0%{
-    color:#000;
-  }
-  50%{
-    color:red;
-  }
-  100%{
-    color:#000;
   }
 `;
 
@@ -94,12 +83,14 @@ const TimeDisplay = styled.span<{ isActive: boolean }>`
 
 function Time({ deadline }: ITime) {
   const [value, setValue] = useState("");
+
   useEffect(() => {
     const interval = setInterval(() => {
       setValue(dTime(deadline));
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
   return (
     <TimeDisplay isActive={Number(dTime(deadline).slice(0, 2)) <= 24}>
       {value}

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setPopUp } from "../features/popUpSlice";
 import { dDay } from "../utils";
 
