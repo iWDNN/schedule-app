@@ -38,8 +38,8 @@ const InList = styled.ul`
 export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
-  const allToDos = useAppSelector((state) => state.toDoList);
-  const noEndtoDos = useAppSelector((state) => state.toDoList).filter((todo) =>
+  const allToDos = useAppSelector((state) => state.toDos);
+  const noEndtoDos = useAppSelector((state) => state.toDos).filter((todo) =>
     st === "ing"
       ? !todo.end
       : st === "cmp"

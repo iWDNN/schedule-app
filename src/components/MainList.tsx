@@ -99,7 +99,7 @@ function Time({ deadline }: ITime) {
 }
 
 export default function MainList() {
-  const todos = useAppSelector((state) => state.toDoList)
+  const sortToDos = useAppSelector((state) => state.toDos)
     .filter((todos) => !todos.end)
     .sort(
       (a, b) =>
@@ -110,8 +110,8 @@ export default function MainList() {
     <MainCt>
       <h1>Deadline ToDos</h1>
       <List>
-        {todos &&
-          todos.map((hotToDo, i) => (
+        {sortToDos &&
+          sortToDos.map((hotToDo, i) => (
             <Item key={uuid()}>
               <span>D-{dDay(hotToDo.date)}</span>
               {i <= 2 ? (

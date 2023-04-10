@@ -5,7 +5,7 @@ import popUpReducer from "../features/popUpSlice";
 
 export const store = configureStore({
   reducer: {
-    toDoList: toDoReducer,
+    toDos: toDoReducer,
     categories: categoryReducer,
     popUpToggle: popUpReducer,
   },
