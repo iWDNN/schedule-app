@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import toDoReducer from "../features/toDoSlice";
-import categoryReducer from "../features/categorySlice";
-import popUpReducer from "../features/popUpSlice";
+import toDoSlice from "../features/toDoSlice";
+import categorySlice from "../features/categorySlice";
+import popUpSlice from "../features/popUpSlice";
 
 export const store = configureStore({
   reducer: {
-    toDos: toDoReducer,
-    categories: categoryReducer,
-    popUpToggle: popUpReducer,
+    toDos: toDoSlice,
+    categories: categorySlice,
+    popUpToggle: popUpSlice,
   },
 });
 
