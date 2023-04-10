@@ -4,7 +4,7 @@ import InMain from "./Routes/InMain";
 
 const router = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     element: <Root />,
     children: [
       {
