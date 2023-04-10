@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { resetToDo, setToDos } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
-import { dDay } from "../utils";
 import ToDo from "./ToDo";
 import { IToDoForm } from "./ToDoInput";
 
