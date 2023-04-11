@@ -141,7 +141,13 @@ export default function PopUp() {
               <span>{data?.title}</span>
             </div>
             <span>
-              {data?.date} <span>{data?.dateOption === "due" && "까지"}</span>
+              {data?.date}{" "}
+              {data?.time.trim() !== "23:59:59"
+                ? data?.time.trim() !== "23:59"
+                  ? data?.time.slice(0, 5)
+                  : null
+                : null}{" "}
+              <span>{data?.dateOption === "due" && "까지"}</span>
             </span>
           </header>
           <pre>{data?.content}</pre>

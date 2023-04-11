@@ -20,7 +20,7 @@ const ToDoCt = styled.li<{ size?: string }>`
   min-width: ${(props) => (props.size === "sm" ? "100%" : "560px")};
   display: grid;
   grid-template-columns: ${(props) =>
-    props.size === "sm" ? "10% 0% 55% 25% 10%" : "10% 15% 45% 20% 10%"};
+    props.size === "sm" ? "15% 0% 50% 25% 10%" : "10% 15% 45% 20% 10%"};
   margin: ${(props) => (props.size === "sm" ? "1em" : "1.5em")} 0;
   padding: 0.7em 1em;
   border-radius: 7px;
@@ -100,6 +100,15 @@ export default function ToDo({ toDoData, size = "sm", idx }: IToDoProps) {
       ) : (
         <span />
       )}
+      {/* {idx === 0 || (idx && size !== "sm") ? (
+        idx <= 2 && (
+          <>
+            <Time deadline={`${toDoData.date} ${toDoData.time}`} />
+          </>
+        )
+      ) : (
+        <span>aa{idx}</span>
+      )} */}
       <span>{toDoData.title}</span>
       <span>
         {toDoData.dateOption === "due" && "~"}
