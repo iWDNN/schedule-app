@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { setPopUp } from "../features/popUpSlice";
 import { dDay } from "../utils";
-import { IToDoForm } from "./ToDoInput";
+import ToDoInput, { IToDoForm } from "./ToDoInput";
 import { TODO_LIST } from "../ls-type";
 import { setToDos } from "../features/toDoSlice";
 
@@ -14,6 +14,7 @@ const PopUpBg = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
@@ -83,11 +84,18 @@ const BtnGrp = styled.div`
     background-color: #eee;
   }
 `;
+const UpdateCt = styled.div``;
 
 export default function PopUp() {
+  //store
   const dispatch = useAppDispatch();
   const toDos = useAppSelector((state) => state.storeToDos);
   const { data } = useAppSelector((state) => state.storePopUp);
+
+  //component
+  const [updateTg, setUpdateTg] = useState(false);
+
+  //event
   const onClickOut = () => {
     dispatch(
       setPopUp({
@@ -100,14 +108,29 @@ export default function PopUp() {
     e.stopPropagation();
   };
 
-  const onClickUp = () => {};
+  const onClickUpdate = () => {
+    setUpdateTg(true);
+  };
   const onClickDel = () => {
     const result = toDos.filter((todo) => todo.id !== data!.id);
     localStorage.setItem(TODO_LIST, JSON.stringify(result));
     dispatch(setToDos(result));
     onClickOut();
   };
-  const onClickCmp = () => {};
+  const onClickCmp = () => {
+    if (data) {
+      const targetIndex = toDos.findIndex((todo) => todo.id === data.id);
+      const targetData = Object.assign({}, toDos[targetIndex]);
+      const result = [
+        ...toDos.slice(0, targetIndex),
+        { ...targetData, cmp: true, end: true },
+        ...toDos.slice(targetIndex + 1),
+      ];
+      localStorage.setItem(TODO_LIST, JSON.stringify(result));
+      dispatch(setToDos(result));
+    } else alert("no data ! reload please");
+    dispatch(setPopUp({ data: {}, toggle: false }));
+  };
   return (
     <PopUpBg onClick={onClickOut}>
       <PopUpCt onClick={onClickPopUp}>
@@ -123,13 +146,20 @@ export default function PopUp() {
           </header>
           <pre>{data?.content}</pre>
         </Content>
-        <BtnGrp>
-          <div>
-            <button onClick={onClickUp}>수정</button>
-            <button onClick={onClickDel}>삭제</button>
-          </div>
-          <button onClick={onClickCmp}>완료</button>
-        </BtnGrp>
+
+        {updateTg ? (
+          <UpdateCt>
+            <ToDoInput mode="update" updateData={data} />
+          </UpdateCt>
+        ) : (
+          <BtnGrp>
+            <div>
+              <button onClick={onClickUpdate}>수정</button>
+              <button onClick={onClickDel}>삭제</button>
+            </div>
+            <button onClick={onClickCmp}>완료</button>
+          </BtnGrp>
+        )}
       </PopUpCt>
     </PopUpBg>
   );

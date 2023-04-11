@@ -3,9 +3,14 @@ import { useForm } from "react-hook-form";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { addToDo } from "../features/toDoSlice";
+import { addToDo, setToDos } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
 import { plusZero } from "../utils";
+
+interface IToDoInputProps {
+  mode?: "update" | "input";
+  updateData?: IToDoForm;
+}
 
 export interface IToDoForm {
   id: string;
@@ -29,8 +34,6 @@ const Header = styled.header`
 
 const Form = styled.form`
   display: flex;
-  * {
-  }
   select {
     padding: 4px;
     outline: none;
@@ -42,6 +45,7 @@ const Form = styled.form`
 `;
 const DateBox = styled.div`
   padding: 4px;
+  background-color: #fff;
   border: 1px solid #eee;
   h1 {
     font-weight: 700;
@@ -78,39 +82,56 @@ const AlertBox = styled.div<{ isActive: boolean }>`
     border: 1px solid #eee;
   }
 `;
-export default function ToDoInput() {
+export default function ToDoInput({
+  mode = "input",
+  updateData,
+}: IToDoInputProps) {
   // store
   const dispatch = useAppDispatch();
-
+  const toDos = useAppSelector((state) => state.storeToDos);
   const categories = useAppSelector((state) => state.storeCategories);
   // component
   const now = new Date();
+
   const {
     handleSubmit,
     register,
     setValue,
     formState: { errors },
   } = useForm<IToDoForm>({
-    defaultValues: {
-      date: `${now.getFullYear()}-${plusZero(
-        String(now.getMonth() + 1)
-      )}-${plusZero(String(now.getDate()))}`,
-      dateOption: "due",
-      priority: "1",
-    },
+    defaultValues:
+      mode === "update"
+        ? { ...updateData, time: updateData?.time.slice(0, 5) }
+        : {
+            date: `${now.getFullYear()}-${plusZero(
+              String(now.getMonth() + 1)
+            )}-${plusZero(String(now.getDate()))}`,
+            dateOption: "due",
+            priority: "1",
+          },
   });
   const onSubmit = (data: IToDoForm) => {
-    data.id = uuid();
-    data.time = data.time
-      ? data.time + ":" + new Date().getSeconds()
-      : "23:59:59";
-    data.end = false;
-    data.cmp = false;
-    const result = data;
-    const toDoListLS = JSON.parse(localStorage.getItem(TODO_LIST) as any);
-    localStorage.setItem(TODO_LIST, JSON.stringify([...toDoListLS, result]));
-    console.log(data.content);
-    dispatch(addToDo(result));
+    if (mode === "input") {
+      data.id = uuid();
+      data.time = data.time
+        ? data.time + ":" + new Date().getSeconds()
+        : "23:59:59";
+      data.end = false;
+      data.cmp = false;
+      const result = data;
+      const toDoListLS = JSON.parse(localStorage.getItem(TODO_LIST) as any);
+      localStorage.setItem(TODO_LIST, JSON.stringify([...toDoListLS, result]));
+      dispatch(addToDo(result));
+    } else if (mode === "update" && updateData) {
+      const targetIndex = toDos.findIndex((todo) => todo.id === updateData.id);
+      const result = [
+        ...toDos.slice(0, targetIndex),
+        data,
+        ...toDos.slice(targetIndex + 1),
+      ];
+      localStorage.setItem(TODO_LIST, JSON.stringify(result));
+      dispatch(setToDos(result));
+    }
     setValue("title", "");
     setValue("content", "");
   };
@@ -152,7 +173,6 @@ export default function ToDoInput() {
             <option value="0">보통</option>
           </optgroup>
         </select>
-
         <InputBox>
           <input placeholder="제목" {...register("title")}></input>
           <textarea
