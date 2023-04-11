@@ -13,7 +13,7 @@ export interface IToDoForm {
   time: string;
   dateOption: string;
   category: string;
-  priority: number;
+  priority: string;
   title: string;
   content: string;
   cmp: boolean;
@@ -69,6 +69,15 @@ const InputBox = styled.div`
   }
 `;
 
+const AlertBox = styled.div<{ isActive: boolean }>`
+  border: ${(props) => (props.isActive ? "1.5px solid red" : "none")};
+  select {
+    height: 100%;
+    padding: 4px;
+    outline: none;
+    border: 1px solid #eee;
+  }
+`;
 export default function ToDoInput() {
   // store
   const dispatch = useAppDispatch();
@@ -76,13 +85,18 @@ export default function ToDoInput() {
   const categories = useAppSelector((state) => state.storeCategories);
   // component
   const now = new Date();
-  const { handleSubmit, register, setValue } = useForm<IToDoForm>({
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm<IToDoForm>({
     defaultValues: {
       date: `${now.getFullYear()}-${plusZero(
         String(now.getMonth() + 1)
       )}-${plusZero(String(now.getDate()))}`,
       dateOption: "due",
-      priority: 1,
+      priority: "1",
     },
   });
   const onSubmit = (data: IToDoForm) => {
@@ -93,17 +107,13 @@ export default function ToDoInput() {
     data.end = false;
     data.cmp = false;
     const result = data;
-    console.log(result);
-
     const toDoListLS = JSON.parse(localStorage.getItem(TODO_LIST) as any);
     localStorage.setItem(TODO_LIST, JSON.stringify([...toDoListLS, result]));
-
+    console.log(data.content);
     dispatch(addToDo(result));
-
     setValue("title", "");
     setValue("content", "");
   };
-
   return (
     <Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -118,21 +128,28 @@ export default function ToDoInput() {
             <option value="Dday">당일</option>
           </optgroup>
         </select>
-        <select {...register("category")} size={3}>
-          <optgroup label="카테고리">
-            {categories &&
-              categories.map((category) => (
-                <option key={uuid()} value={category}>
-                  {category}
-                </option>
-              ))}
-          </optgroup>
-        </select>
+        <AlertBox isActive={errors.category ? true : false}>
+          <select
+            {...register("category", {
+              required: true,
+            })}
+            size={3}
+          >
+            <optgroup label="카테고리">
+              {categories &&
+                categories.map((category) => (
+                  <option key={uuid()} value={category}>
+                    {category}
+                  </option>
+                ))}
+            </optgroup>
+          </select>
+        </AlertBox>
         <select {...register("priority")} size={3}>
           <optgroup label="중요도">
-            <option value={1}>매우 중요</option>
-            <option value={2}>중요</option>
-            <option value={3}>보통</option>
+            <option value="2">매우 중요</option>
+            <option value="1">중요</option>
+            <option value="0">보통</option>
           </optgroup>
         </select>
 

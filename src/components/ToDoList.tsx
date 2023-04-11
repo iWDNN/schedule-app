@@ -18,15 +18,11 @@ const List = styled.ul`
 `;
 const Item = styled.li`
   border: 1px solid #eee;
-  padding: 0 1em;
+  padding: 0 0.5em;
   margin: 0 10px;
   h3 {
     margin: 1em 0;
     text-align: center;
-  }
-  * {
-    border: none;
-    padding: 0.1em;
   }
 `;
 const InList = styled.ul`
@@ -38,13 +34,21 @@ export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
   const allToDos = useAppSelector((state) => state.storeToDos);
-  const filteredToDos = allToDos.filter((todo) =>
-    st === "ing"
-      ? !todo.end
-      : st === "cmp"
-      ? todo.end && todo.cmp
-      : todo.end && !todo.cmp
-  );
+  const filteredToDos = allToDos
+    .filter((todo) =>
+      st === "ing"
+        ? !todo.end && !todo.cmp
+        : st === "cmp"
+        ? todo.end && todo.cmp
+        : st === "fail"
+        ? todo.end && !todo.cmp
+        : null
+    )
+    .sort(
+      (a, b) =>
+        new Date(`${a.date} ${a.time}`).getTime() -
+        new Date(`${b.date} ${b.time}`).getTime()
+    );
   const categories = useAppSelector((state) => state.storeCategories);
 
   const onClickReset = () => {

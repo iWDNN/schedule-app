@@ -37,7 +37,6 @@ const List = styled.ul`
 const Item = styled.li``;
 export default function InMain() {
   const categories = useAppSelector((state) => state.storeCategories);
-  console.log("D:", JSON.stringify(categories) === "[]");
   return (
     <InMainCt>
       <section>

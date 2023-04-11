@@ -15,8 +15,8 @@ const Container = styled.div`
   flex-direction: column;
 `;
 const Programmer = styled.span`
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
   font-size: 0.8em;
   font-weight: 700;
   letter-spacing: 1px;
@@ -26,9 +26,6 @@ const Programmer = styled.span`
 function Root() {
   const { pathname } = useLocation();
   const { toggle } = useAppSelector((state) => state.storePopUp);
-  useEffect(() => {
-    console.log("Root.tsx useEffect");
-  }, []);
   return (
     <>
       <Container>
