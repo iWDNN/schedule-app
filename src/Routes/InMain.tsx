@@ -73,10 +73,8 @@ export default function InMain() {
         </MenuItem>
       </MenuList>
 
-      <section>
-        {todoTg && <ToDoInput />}
-        {categoryTg && <CategoryInput />}
-      </section>
+      <section>{categoryTg && <CategoryInput />}</section>
+      <section>{todoTg && <ToDoInput />}</section>
 
       {JSON.stringify(categories) !== "[]" && (
         <>

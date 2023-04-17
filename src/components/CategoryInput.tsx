@@ -30,6 +30,10 @@ export default function CategoryInput() {
   const dispatch = useAppDispatch();
 
   const { handleSubmit, register, setValue } = useForm<ICategoryForm>();
+
+  const onClickReset = () => {
+    dispatch(setCategories([]));
+  };
   const onSubmit = ({ name }: ICategoryForm) => {
     const result: ICategoryState = { id: uuid(), name };
 
@@ -43,6 +47,7 @@ export default function CategoryInput() {
   return (
     <CategoryCt>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <button onClick={onClickReset}>카테고리 리셋</button>
         <input {...register("name")} placeholder="카테고리 이름" />
         <button>추가</button>
       </Form>
