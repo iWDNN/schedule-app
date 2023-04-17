@@ -33,6 +33,7 @@ export default function CategoryInput() {
 
   const onClickReset = () => {
     dispatch(setCategories([]));
+    localStorage.setItem(CATEGORIES, JSON.stringify([]));
   };
   const onSubmit = ({ name }: ICategoryForm) => {
     const result: ICategoryState = { id: uuid(), name };
