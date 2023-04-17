@@ -19,7 +19,12 @@ const CategoryCt = styled.div`
   flex-direction: column;
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+  input {
+    border: 1px solid #eee;
+    padding: 0.7em 1em;
+  }
+`;
 
 export default function CategoryInput() {
   const dispatch = useAppDispatch();
@@ -35,13 +40,8 @@ export default function CategoryInput() {
 
     setValue("name", "");
   };
-  const onClickReset = () => {
-    localStorage.setItem(CATEGORIES, JSON.stringify([]));
-    dispatch(setCategories([]));
-  };
   return (
     <CategoryCt>
-      <button onClick={onClickReset}>카테고리 리셋</button>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input {...register("name")} placeholder="카테고리 이름" />
         <button>추가</button>

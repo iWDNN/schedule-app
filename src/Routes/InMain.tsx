@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CategoryInput from "../components/CategoryInput";
-import CategoryList from "../components/CategoryList";
 import ToDoInput from "../components/ToDoInput";
 import ToDoList from "../components/ToDoList";
 import { useAppSelector } from "../hooks";
@@ -12,6 +12,20 @@ const InMainCt = styled.div`
   flex-direction: column;
   section {
     margin: 1em 0;
+  }
+`;
+const MenuList = styled.ul`
+  display: flex;
+  /* flex-direction: column; */
+`;
+const MenuItem = styled.button`
+  margin: 0 5px;
+  border: 2px solid #eee;
+  background-color: #fff;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #eee;
   }
 `;
 const List = styled.ul`
@@ -38,17 +52,34 @@ const List = styled.ul`
 const Item = styled.li``;
 export default function InMain() {
   const categories = useAppSelector((state) => state.storeCategories);
+  const [categoryTg, setCategoryTg] = useState(false);
+  const [todoTg, setTodoTg] = useState(false);
   return (
     <InMainCt>
+      <MenuList>
+        <MenuItem
+          onClick={() => {
+            setCategoryTg((prev) => !prev);
+          }}
+        >
+          카테고리 추가
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            setTodoTg((prev) => !prev);
+          }}
+        >
+          할 일 추가
+        </MenuItem>
+      </MenuList>
+
       <section>
-        <CategoryInput />
-        <CategoryList />
+        {todoTg && <ToDoInput />}
+        {categoryTg && <CategoryInput />}
       </section>
+
       {JSON.stringify(categories) !== "[]" && (
         <>
-          <section>
-            <ToDoInput />
-          </section>
           <section>
             <List>
               <h1>Ing</h1>

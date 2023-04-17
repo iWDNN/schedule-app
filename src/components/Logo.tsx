@@ -18,6 +18,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 2em 0;
 `;
 const Icon = styled.div`
   text-align: center;
@@ -36,13 +37,13 @@ export default function Logo() {
 
   return (
     <>
-      <Container>
-        <Link to={pathname === "/" ? "main" : "/"}>
+      <Link to={pathname === "/" ? "/main" : "/"}>
+        <Container>
           <Icon>
             <i className="fa-solid fa-terminal"></i>
           </Icon>
-        </Link>
-      </Container>
+        </Container>
+      </Link>
     </>
   );
 }

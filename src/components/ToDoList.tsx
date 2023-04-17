@@ -14,6 +14,7 @@ const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 1em;
+  background-color: #fff;
 `;
 const Item = styled.li`
   border: 1px solid #eee;
@@ -25,7 +26,7 @@ const Item = styled.li`
   }
 `;
 const InList = styled.ul`
-  width: 300px;
+  width: 370px;
   height: 350px;
 `;
 

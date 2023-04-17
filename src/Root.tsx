@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector } from "./hooks";
 import Logo from "./components/Logo";
 import MainList from "./components/MainList";
 import PopUp from "./components/PopUp";
-import Menu from "./components/Menu";
 
 const Container = styled.div`
   width: 100%;
@@ -18,13 +17,13 @@ const Container = styled.div`
 const MainCt = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: 20vh;
+  position: relative;
 `;
 const Footer = styled.footer`
-  /* position: fixed;
-  bottom: 0; */
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
   font-size: 0.8em;
   font-weight: 700;
   letter-spacing: 1px;
@@ -39,7 +38,6 @@ function Root() {
       <Container>
         <MainCt>
           <Logo />
-          <Menu />
         </MainCt>
         {pathname === "/" && <MainList />}
         <Outlet />

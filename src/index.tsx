@@ -141,7 +141,6 @@ a {
 button {
     border: none;
     padding: 0.7em 1em;
-    border-radius: 7px;
 }
 * {
   box-sizing: border-box;
