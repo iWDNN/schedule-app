@@ -23,7 +23,7 @@ const Icon = styled.div`
   text-align: center;
   i {
     font-size: 58px;
-    margin: 0.9em 0;
+    /* margin: 0.9em 0; */
     cursor: pointer;
   }
 

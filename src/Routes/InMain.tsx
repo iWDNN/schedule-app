@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CategoryInput from "../components/CategoryInput";
+import CategoryList from "../components/CategoryList";
 import ToDoInput from "../components/ToDoInput";
 import ToDoList from "../components/ToDoList";
 import { useAppSelector } from "../hooks";
@@ -41,6 +42,7 @@ export default function InMain() {
     <InMainCt>
       <section>
         <CategoryInput />
+        <CategoryList />
       </section>
       {JSON.stringify(categories) !== "[]" && (
         <>

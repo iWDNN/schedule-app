@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IToDoForm } from "../components/ToDoInput";
+import { IToDoState } from "./toDoSlice";
 interface IPopUpState {
   toggle: boolean;
-  data?: IToDoForm;
+  data?: IToDoState;
 }
 
 const initialState: IPopUpState = {

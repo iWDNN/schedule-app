@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { setPopUp } from "../features/popUpSlice";
 import { dDay } from "../utils";
-import ToDoInput, { IToDoForm } from "./ToDoInput";
+import ToDoInput from "./ToDoInput";
 import { TODO_LIST } from "../ls-type";
 import { setToDos } from "../features/toDoSlice";
 

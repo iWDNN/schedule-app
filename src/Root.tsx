@@ -5,6 +5,7 @@ import { useAppSelector } from "./hooks";
 import Logo from "./components/Logo";
 import MainList from "./components/MainList";
 import PopUp from "./components/PopUp";
+import Menu from "./components/Menu";
 
 const Container = styled.div`
   width: 100%;
@@ -14,7 +15,14 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const Programmer = styled.span`
+const MainCt = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20vh;
+`;
+const Footer = styled.footer`
   /* position: fixed;
   bottom: 0; */
   font-size: 0.8em;
@@ -29,12 +37,13 @@ function Root() {
   return (
     <>
       <Container>
-        <Logo />
+        <MainCt>
+          <Logo />
+          <Menu />
+        </MainCt>
         {pathname === "/" && <MainList />}
         <Outlet />
-        <Programmer>
-          | Github - iWDNN | Gmail - chansi2064@gmail.com |
-        </Programmer>
+        <Footer>| Github - iWDNN | Gmail - chansi2064@gmail.com |</Footer>
       </Container>
       {toggle && <PopUp />}
     </>

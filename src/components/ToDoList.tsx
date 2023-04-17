@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { setToDos } from "../features/toDoSlice";
+import { IToDoState, setToDos } from "../features/toDoSlice";
 import { TODO_LIST } from "../ls-type";
 import ToDo from "./ToDo";
-import { IToDoForm } from "./ToDoInput";
 
 interface IToDoListProps {
   st: string;
@@ -33,6 +32,7 @@ const InList = styled.ul`
 export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
+  const categories = useAppSelector((state) => state.storeCategories);
   const allToDos = useAppSelector((state) => state.storeToDos);
   const filteredToDos = allToDos
     .filter((todo) =>
@@ -49,14 +49,14 @@ export default function ToDoList({ st }: IToDoListProps) {
         new Date(`${a.date} ${a.time}`).getTime() -
         new Date(`${b.date} ${b.time}`).getTime()
     );
-  const categories = useAppSelector((state) => state.storeCategories);
 
   const onClickReset = () => {
-    localStorage.setItem(TODO_LIST, JSON.stringify([]));
-    dispatch(setToDos([]));
+    const result = allToDos.filter((todo) => !filteredToDos.includes(todo));
+    localStorage.setItem(TODO_LIST, JSON.stringify(result));
+    dispatch(setToDos(result));
   };
   const updateToDo = () => {
-    const result: IToDoForm[] = [];
+    const result: IToDoState[] = [];
     allToDos.forEach((toDo) => {
       const temp = Object.assign({}, toDo);
       if (
@@ -77,15 +77,15 @@ export default function ToDoList({ st }: IToDoListProps) {
 
   return (
     <>
-      <button onClick={onClickReset}>투두리스트 리셋</button>
+      <button onClick={onClickReset}>{st.toUpperCase()} 리셋</button>
       <List>
         {categories.map((category) => (
           <Item key={uuid()}>
-            <h3>{category}</h3>
+            <h3>{category.name}</h3>
             <InList>
               {filteredToDos.map(
                 (todo) =>
-                  todo.category === category && (
+                  todo.category === category.name && (
                     <ToDo key={uuid()} toDoData={todo} />
                   )
               )}

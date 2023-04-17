@@ -2,10 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IToDoForm } from "../components/ToDoInput";
 import { TODO_LIST } from "../ls-type";
 
+export interface IToDoState extends IToDoForm {
+  id: string;
+  cmp: boolean;
+  end: boolean;
+}
+
 if (!localStorage.getItem(TODO_LIST)) {
   localStorage.setItem(TODO_LIST, JSON.stringify([]));
 }
-const initialState: IToDoForm[] = JSON.parse(
+const initialState: IToDoState[] = JSON.parse(
   localStorage.getItem(TODO_LIST) as any
 );
 

@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { useAppDispatch } from "../hooks";
 import { setPopUp } from "../features/popUpSlice";
 import { dDay, dTime } from "../utils";
-import { IToDoForm } from "./ToDoInput";
 import uuid from "react-uuid";
+import { IToDoState } from "../features/toDoSlice";
 // #f1696b
 // #4BA083
 interface IToDoProps {
-  toDoData: IToDoForm;
+  toDoData: IToDoState;
   size?: "sm" | "md";
   idx?: number;
 }
