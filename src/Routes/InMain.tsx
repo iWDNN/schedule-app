@@ -54,11 +54,13 @@ export default function InMain() {
   const categories = useAppSelector((state) => state.storeCategories);
   const [categoryTg, setCategoryTg] = useState(false);
   const [todoTg, setTodoTg] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
   return (
     <InMainCt>
       <MenuList>
         <MenuItem
           onClick={() => {
+            setErrMsg("");
             setCategoryTg((prev) => !prev);
           }}
         >
@@ -66,7 +68,9 @@ export default function InMain() {
         </MenuItem>
         <MenuItem
           onClick={() => {
-            setTodoTg((prev) => !prev);
+            if (JSON.stringify(categories) !== "[]") {
+              setTodoTg((prev) => !prev);
+            } else setErrMsg("카테고리를 먼저 추가해주세요");
           }}
         >
           할 일 추가
@@ -75,6 +79,7 @@ export default function InMain() {
 
       <section>{categoryTg && <CategoryInput />}</section>
       <section>{todoTg && <ToDoInput />}</section>
+      <span>{errMsg}</span>
 
       {JSON.stringify(categories) !== "[]" && (
         <>

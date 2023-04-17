@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import uuid from "react-uuid";
 import styled from "styled-components";
@@ -21,20 +21,6 @@ export interface IToDoForm {
   title: string;
   content: string;
 }
-
-const now = new Date();
-
-const defaultToDoData: IToDoForm = {
-  date: `${now.getFullYear()}-${plusZero(
-    String(now.getMonth() + 1)
-  )}-${plusZero(String(now.getDate()))}`,
-  time: "",
-  dateOption: "due",
-  category: "",
-  priority: "0",
-  title: "",
-  content: "",
-};
 
 const Header = styled.header`
   width: 100%;
@@ -97,6 +83,21 @@ const AlertBox = styled.div<{ isActive: boolean }>`
     border: 1px solid #eee;
   }
 `;
+
+const now = new Date();
+
+const defaultToDoData: IToDoForm = {
+  date: `${now.getFullYear()}-${plusZero(
+    String(now.getMonth() + 1)
+  )}-${plusZero(String(now.getDate()))}`,
+  time: "",
+  dateOption: "due",
+  category: "",
+  priority: "0",
+  title: "",
+  content: "",
+};
+
 export default function ToDoInput({
   mode = "input",
   updateData,
@@ -152,6 +153,7 @@ export default function ToDoInput({
       dispatch(setToDos(result));
       setValue("title", "");
       setValue("content", "");
+      setValue("category", "ㅎㅇ");
     }
   };
   return (
