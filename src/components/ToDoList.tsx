@@ -14,7 +14,7 @@ const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 1em;
-  background-color: #ffcf;
+  background-color: #fff;
 `;
 const Item = styled.li`
   border: 1px solid #eee;
@@ -56,6 +56,7 @@ export default function ToDoList({ st }: IToDoListProps) {
     localStorage.setItem(TODO_LIST, JSON.stringify(result));
     dispatch(setToDos(result));
   };
+
   const updateToDo = () => {
     const result: IToDoState[] = [];
     allToDos.forEach((toDo) => {
