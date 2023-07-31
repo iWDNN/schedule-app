@@ -14,7 +14,7 @@ const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 1em;
-  background-color: #fff;
+  background-color: #ffcf;
 `;
 const Item = styled.li`
   border: 1px solid #eee;
