@@ -29,7 +29,11 @@ const InList = styled.ul`
   width: 370px;
   height: 350px;
 `;
+<<<<<<< HEAD
 // master 브랜치에서 작성한 문구
+=======
+// renewal 브랜치에서 작성한 문구
+>>>>>>> renewal
 export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
