@@ -14,7 +14,7 @@ const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 1em;
-  background-color: #ffcf;
+  background-color: #fff;
 `;
 const Item = styled.li`
   border: 1px solid #eee;
@@ -29,7 +29,7 @@ const InList = styled.ul`
   width: 370px;
   height: 350px;
 `;
-
+// renewal 브랜치에서 작성한 문구
 export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
