@@ -29,7 +29,7 @@ const InList = styled.ul`
   width: 370px;
   height: 350px;
 `;
-
+// master 브랜치에서 작성한 문구
 export default function ToDoList({ st }: IToDoListProps) {
   const dispatch = useAppDispatch();
 
